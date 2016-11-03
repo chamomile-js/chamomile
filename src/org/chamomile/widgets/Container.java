@@ -6,7 +6,7 @@ import org.chamomile.collections.Sequence;
 import org.chamomile.util.InternalPreconditions;
 import org.chamomile.util.ListenerList;
 
-public abstract class Container<T extends Component> extends Component {
+public abstract class Container<T extends Component> extends Component implements HasChildren<T> {
 
 	public final class ChildrenSequence implements Sequence<T> {
 		private final Sequence<T> children = Sequence.create(new ArrayList<T>());
@@ -23,15 +23,15 @@ public abstract class Container<T extends Component> extends Component {
 			InternalPreconditions.checkArgument(child != null, "child is null");
 			InternalPreconditions.checkArgument(!contains(child), "child '%s' was added before", child);
 			InternalPreconditions.checkArgument(child.getParent() == null, "child '%s' already has a parent.", child);
-			
-			if (child instanceof Container && ((Container<?>) child).isAncestor(Container.this)) {
+
+			if (child instanceof HasChildren && ((HasChildren<?>) child).isAncestor(Container.this)) {
 				throw new IllegalArgumentException("Component already exists in ancestry.");
 			}
-			
+
 			child.setParent(Container.this);
 			children.insert(child, index);
 			if (containerListeners != null) {
-				containerListeners.viewInserted(Container.this, index);
+				containerListeners.componentInserted(Container.this, index);
 			}
 		}
 
@@ -58,7 +58,7 @@ public abstract class Container<T extends Component> extends Component {
 			Sequence<T> removed = children.remove(index, count);
 			if (removed.getLength() > 0) {
 				if (containerListeners != null) {
-					containerListeners.viewRemoved(Container.this, index, removed);
+					containerListeners.componentsRemoved(Container.this, index, removed);
 				}
 			}
 			return removed;
@@ -84,39 +84,17 @@ public abstract class Container<T extends Component> extends Component {
 			remove(0, getLength());
 		}
 	}
-	
-	private static class ContainerListenerList<T extends Component> extends ListenerList<ContainerListener<T>> implements ContainerListener<T> {
-		@Override
-		public void viewInserted(Container<T> container, int index) {
-			for (ContainerListener<T> listener : this) {
-				listener.viewInserted(container, index);
-			}
-		}
-
-		@Override
-		public void viewRemoved(Container<T> container, int index, Sequence<T> views) {
-			for (ContainerListener<T> listener : this) {
-				listener.viewRemoved(container, index, views);
-			}
-		}
-
-		@Override
-		public void viewMoved(Container<T> container, int from, int to) {
-			for (ContainerListener<T> listener : this) {
-				listener.viewMoved(container, from, to);
-			}
-		}
-	}
 
 	// ---
 
-	private ContainerListenerList<T> containerListeners;
-	
+	private HasChildrenListenerList<T> containerListeners;
+
 	/**
 	 * The container's children property.
 	 */
 	public static final String CHILDREN = "_children";
-	
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public ChildrenSequence getChildren() {
 		ChildrenSequence children = (ChildrenSequence) get(CHILDREN);
@@ -125,45 +103,47 @@ public abstract class Container<T extends Component> extends Component {
 		}
 		return children;
 	}
-	
+
 	// ---
 
-	private boolean isAncestor(Container<?> viewContainer) {
+	@Override
+	public boolean isAncestor(HasChildren<?> container) {
 		boolean ancestor = false;
 
-		Component parent = viewContainer;
+		Component parent = (Component) container;
 		while (parent != null) {
 			if (parent == this) {
 				ancestor = true;
 				break;
 			}
-			parent = parent.getParent();
+			parent = (Component) parent.getParent();
 		}
 
 		return ancestor;
 	}
 
+	@Override
 	public void descendantAdded(Component descendant) {
-		Container<?> parent = getParent();
+		HasChildren<?> parent = getParent();
 
 		if (parent != null) {
 			parent.descendantAdded(descendant);
 		}
 	}
 
+	@Override
 	public void descendantRemoved(Component descendant) {
-		Container<?> parent = getParent();
+		HasChildren<?> parent = getParent();
 
 		if (parent != null) {
 			parent.descendantRemoved(descendant);
 		}
 	}
 
-	public final ListenerList<ContainerListener<T>> getContainerListeners() {
+	public final ListenerList<HasChildrenListener<T>> getContainerListeners() {
 		if (containerListeners == null) {
-			containerListeners = new ContainerListenerList<T>();
+			containerListeners = new HasChildrenListenerList<T>();
 		}
 		return containerListeners;
 	}
-
 }
