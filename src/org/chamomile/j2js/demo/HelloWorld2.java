@@ -1,10 +1,11 @@
 package org.chamomile.j2js.demo;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+
 import j2js.Global;
-import j2js.w3c.dom.Element;
-import j2js.w3c.dom.events.Event;
-import j2js.w3c.dom.events.EventListener;
-import j2js.w3c.dom.events.EventTarget;
 
 public class HelloWorld2 {
    
