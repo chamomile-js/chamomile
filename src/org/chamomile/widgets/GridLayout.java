@@ -192,8 +192,17 @@ public class GridLayout extends Container<GridLayoutRow> {
 	// Visibility utilities
 	//
 	
-	// hidden-*-up
-	// hidden-md-down
+	public static final String HIDDEN_XS_DOWN = "hidden-xs-down";
+	public static final String HIDDEN_SM_DOWN = "hidden-sm-down";
+	public static final String HIDDEN_MD_DOWN = "hidden-md-down";
+	public static final String HIDDEN_LG_DOWN = "hidden-lg-down";
+	public static final String HIDDEN_XL_DOWN = "hidden-xl-down";
+
+	public static final String HIDDEN_XS_UP = "hidden-xs-up";
+	public static final String HIDDEN_SM_UP = "hidden-sm-up";
+	public static final String HIDDEN_MD_UP = "hidden-md-up";
+	public static final String HIDDEN_LG_UP = "hidden-lg-up";
+	public static final String HIDDEN_XL_UP = "hidden-xl-up";
 	
 	//
 	// Print classes

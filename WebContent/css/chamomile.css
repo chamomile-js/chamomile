@@ -89,6 +89,14 @@ div.chamomile-grid-layout > div {
 	height: 100%;
 }
 
+div.chamomile-grid-layout > div > div.row {
+	
+	/* !!! REQUIRED BY FIREFOX
+	 * See:  https://bugzilla.mozilla.org/show_bug.cgi?id=1043520 
+	 */
+	min-height: 0;
+}
+
 div.chamomile-grid-layout > div > div.row.flex-1,
 div.chamomile-grid-layout > div > div.row.flex-xs-1 {
 	-webkit-box-flex: 1;
@@ -425,6 +433,14 @@ div.chamomile-grid-layout > div > div.row.flex-xs-8 {
 		-moz-flex: 8;
 		flex: 8;
 	}
+}
+
+/* --------------------------------------------------------------- */
+/*  Form Style                                                     */
+/* --------------------------------------------------------------- */
+
+.chamomile-form {
+	overflow: auto !important;
 }
 
 /* --------------------------------------------------------------- */

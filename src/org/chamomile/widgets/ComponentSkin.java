@@ -5,9 +5,8 @@ import org.chamomile.beans.ObservableBean;
 import org.chamomile.collections.Dictionary;
 import org.chamomile.collections.Sequence;
 import org.chamomile.util.Callback;
-
-import j2js.w3c.dom.css.CSSStyleDeclaration;
-import j2js.w3c.dom.html.HTMLElement;
+import org.w3c.dom.css.CSSStyleDeclaration;
+import org.w3c.dom.html.HTMLElement;
 
 public abstract class ComponentSkin implements Skin, BeanListener, ClassNameListener {
 
@@ -61,6 +60,10 @@ public abstract class ComponentSkin implements Skin, BeanListener, ClassNameList
 	@Override
 	public Component getComponent() {
 		return component;
+	}
+
+	protected static Skin getSkin(Component component) {
+		return component.getSkin();
 	}
 
 	@Override

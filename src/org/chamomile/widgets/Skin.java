@@ -1,6 +1,6 @@
 package org.chamomile.widgets;
 
-import j2js.w3c.dom.html.HTMLElement;
+import org.w3c.dom.html.HTMLElement;
 
 public interface Skin {
 

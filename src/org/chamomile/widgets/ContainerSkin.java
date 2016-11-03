@@ -1,22 +1,21 @@
 package org.chamomile.widgets;
 
 import org.chamomile.collections.Sequence;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.html.HTMLElement;
 
-import j2js.w3c.dom.NodeList;
-import j2js.w3c.dom.html.HTMLElement;
-
-public abstract class ContainerSkin<T extends Component> extends ComponentSkin implements ContainerListener<T> {
+public abstract class ContainerSkin<T extends Component> extends ComponentSkin implements HasChildrenListener<T> {
 
 	@Override
 	public void install(Component component) {
 		super.install(component);
-		
+
 		@SuppressWarnings("unchecked")
 		Container<T> container = (Container<T>) component;
-		
+
 		// Add this as a container listener
-	    container.getContainerListeners().add(this);
-		
+		container.getContainerListeners().add(this);
+
 		//
 		// Install property change listeners.
 		//
@@ -24,7 +23,7 @@ public abstract class ContainerSkin<T extends Component> extends ComponentSkin i
 	}
 
 	@Override
-	public void viewInserted(Container<T> container, int index) {
+	public void componentInserted(HasChildren<T> container, int index) {
 		HTMLElement parentElem = getContainerElement();
 		Component component = container.getChildren().get(index);
 		if (component != null) {
@@ -39,7 +38,7 @@ public abstract class ContainerSkin<T extends Component> extends ComponentSkin i
 	}
 
 	@Override
-	public void viewRemoved(Container<T> container, int index, Sequence<T> removed) {
+	public void componentsRemoved(HasChildren<T> container, int index, Sequence<T> removed) {
 		HTMLElement parentElem = getContainerElement();
 		for (int i = 0, n = removed.getLength(); i < n; i++) {
 			Component component = removed.get(i);
@@ -51,10 +50,10 @@ public abstract class ContainerSkin<T extends Component> extends ComponentSkin i
 	}
 
 	@Override
-	public void viewMoved(Container<T> container, int from, int to) {
+	public void componentMoved(HasChildren<T> container, int from, int to) {
 		throw new UnsupportedOperationException("Not implemented yet!!!");
 	}
-	
+
 	protected abstract HTMLElement getContainerElement();
 
 }

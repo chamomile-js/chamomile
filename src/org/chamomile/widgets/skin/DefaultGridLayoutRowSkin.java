@@ -4,9 +4,8 @@ import static j2js.Global.document;
 
 import org.chamomile.widgets.Component;
 import org.chamomile.widgets.ContainerSkin;
-
-import j2js.w3c.dom.html.HTMLDivElement;
-import j2js.w3c.dom.html.HTMLElement;
+import org.w3c.dom.html.HTMLDivElement;
+import org.w3c.dom.html.HTMLElement;
 
 public class DefaultGridLayoutRowSkin extends ContainerSkin<Component> implements GridLayoutRowSkin {
 	
@@ -15,6 +14,16 @@ public class DefaultGridLayoutRowSkin extends ContainerSkin<Component> implement
 	public DefaultGridLayoutRowSkin() {
 		container = (HTMLDivElement) document.createElement("div");
 		container.setClassName("row");
+	}
+	
+	@Override
+	public void install(Component view) {
+		super.install(view);
+
+		//
+		// Install property listeners...
+		//
+		
 	}
 
 	@Override

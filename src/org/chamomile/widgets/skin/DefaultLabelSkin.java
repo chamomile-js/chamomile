@@ -6,10 +6,9 @@ import org.chamomile.util.Callback;
 import org.chamomile.widgets.Component;
 import org.chamomile.widgets.ComponentSkin;
 import org.chamomile.widgets.Label;
-
-import j2js.w3c.dom.html.HTMLDivElement;
-import j2js.w3c.dom.html.HTMLElement;
-import j2js.w3c.dom.html.HTMLLabelElement;
+import org.w3c.dom.html.HTMLDivElement;
+import org.w3c.dom.html.HTMLElement;
+import org.w3c.dom.html.HTMLLabelElement;
 
 public class DefaultLabelSkin extends ComponentSkin implements LabelSkin {
 	private final HTMLLabelElement label;

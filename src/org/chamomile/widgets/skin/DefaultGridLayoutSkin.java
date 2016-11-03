@@ -7,9 +7,8 @@ import org.chamomile.widgets.Component;
 import org.chamomile.widgets.ContainerSkin;
 import org.chamomile.widgets.GridLayout;
 import org.chamomile.widgets.GridLayoutRow;
-
-import j2js.w3c.dom.html.HTMLDivElement;
-import j2js.w3c.dom.html.HTMLElement;
+import org.w3c.dom.html.HTMLDivElement;
+import org.w3c.dom.html.HTMLElement;
 
 public class DefaultGridLayoutSkin extends ContainerSkin<GridLayoutRow> implements GridLayoutSkin {
 	private final HTMLDivElement container;

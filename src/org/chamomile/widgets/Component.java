@@ -7,11 +7,10 @@ import org.chamomile.collections.Sequence;
 import org.chamomile.util.Callback;
 import org.chamomile.util.InternalPreconditions;
 import org.chamomile.util.ListenerList;
-
-import j2js.w3c.dom.events.Event;
-import j2js.w3c.dom.events.EventException;
-import j2js.w3c.dom.events.EventListener;
-import j2js.w3c.dom.events.EventTarget;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventException;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 
 public abstract class Component extends ObservableBean implements EventTarget {
 
@@ -157,18 +156,18 @@ public abstract class Component extends ObservableBean implements EventTarget {
 	 */
 	public static final String PARENT = "_parent";
 
-	public Container<?> getParent() {
-		return (Container<?>) get(PARENT);
+	public HasChildren<?> getParent() {
+		return (HasChildren<?>) get(PARENT);
 	}
 
-	protected void setParent(final Container<?> parent) {
-		Container<?> previousParent = (Container<?>) get(PARENT);
+	protected void setParent(final HasChildren<?> parent) {
+		HasChildren<?> previousParent = (HasChildren<?>) get(PARENT);
 		if (previousParent != null) {
 			previousParent.descendantRemoved(this);
 		}
-		put(PARENT, parent, new Callback<Container<?>, Void>() {
+		put(PARENT, parent, new Callback<HasChildren<?>, Void>() {
 			@Override
-			public Void call(Container<?> previousValue) {
+			public Void call(HasChildren<?> previousValue) {
 				if (parent != null) {
 					parent.descendantAdded(Component.this);
 				}

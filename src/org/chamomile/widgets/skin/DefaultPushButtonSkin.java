@@ -6,10 +6,9 @@ import org.chamomile.util.Callback;
 import org.chamomile.widgets.Component;
 import org.chamomile.widgets.ComponentSkin;
 import org.chamomile.widgets.PushButton;
-
-import j2js.w3c.dom.html.HTMLButtonElement;
-import j2js.w3c.dom.html.HTMLDivElement;
-import j2js.w3c.dom.html.HTMLElement;
+import org.w3c.dom.html.HTMLButtonElement;
+import org.w3c.dom.html.HTMLDivElement;
+import org.w3c.dom.html.HTMLElement;
 
 public class DefaultPushButtonSkin extends ComponentSkin implements PushButtonSkin {
 	private final HTMLButtonElement button;
