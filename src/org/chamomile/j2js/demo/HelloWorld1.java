@@ -35,42 +35,72 @@ public class HelloWorld1 {
 		InputElement input = new InputElement();
 		input.setLabel("Input Label");
 		input.setId("email");
+		input.getClassNames().add(GridLayout.COL_LG);
 		form.getChildren().add(input);
 
 		input = new InputElement();
 		input.setLabel("Password");
-		input.setId("passwd");
+		input.setId("passwd1");
 		input.setType(Type.PASSWORD);
+		input.getClassNames().add(GridLayout.COL_LG);
+		form.getChildren().add(input);
+
+		input = new InputElement();
+		input.setLabel("Password");
+		input.setId("passwd2");
+		input.setType(Type.PASSWORD);
+		input.getClassNames().add(GridLayout.COL_LG);
+		form.getChildren().add(input);
+
+		input = new InputElement();
+		input.setLabel("Password");
+		input.setId("passwd3");
+		input.setType(Type.PASSWORD);
+		input.getClassNames().add(GridLayout.COL_LG);
+		form.getChildren().add(input);
+
+		input = new InputElement();
+		input.setLabel("Password");
+		input.setId("passwd4");
+		input.setType(Type.PASSWORD);
+		input.getClassNames().add(GridLayout.COL_LG);
 		form.getChildren().add(input);
 
 		TextArea textArea = new TextArea();
 		textArea.setLabel("Comments");
 		textArea.setId("comments");
+		textArea.getClassNames().add(GridLayout.COL_LG);
 		form.getChildren().add(textArea);
 
 		input = new InputElement();
 		input.setType(Type.FILE);
+		input.getClassNames().add(GridLayout.COL_LG);
 		form.getChildren().add(input);
 
 		input = new InputElement();
+		input.getClassNames().add(GridLayout.COL_LG);
 		form.getChildren().add(input);
 		
 		FieldSet fieldSet = new FieldSet();
 		fieldSet.setLegend("Radio Buttons");
+		fieldSet.getClassNames().add(GridLayout.COL_LG);
 		form.getChildren().add(fieldSet);
 
 		RadioButton radio = new RadioButton();
 		radio.setLabel("Lala alalal lalal");
 		radio.setName("radio-name");
+		radio.getClassNames().add(GridLayout.COL_LG);
 		fieldSet.getChildren().add(radio);
 
 		radio = new RadioButton();
 		radio.setLabel("Lala alalal lalal");
 		radio.setName("radio-name");
+		radio.getClassNames().add(GridLayout.COL_LG);
 		fieldSet.getChildren().add(radio);
 
 		CheckBox checkBox = new CheckBox();
 		checkBox.setLabel("Lala alalal lalal");
+		checkBox.getClassNames().add(GridLayout.COL_LG);
 		form.getChildren().add(checkBox);
 	}
 
