@@ -1,13 +1,14 @@
 package org.chamomile.j2js.demo;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.html.HTMLObjectElement;
+import org.w3c.dom.svg.SVGCircleElement;
+import org.w3c.dom.svg.SVGDocument;
+
 import j2js.Global;
-import j2js.w3c.dom.Element;
-import j2js.w3c.dom.events.Event;
-import j2js.w3c.dom.events.EventListener;
-import j2js.w3c.dom.events.EventTarget;
-import j2js.w3c.dom.html.HTMLObjectElement;
-import j2js.w3c.dom.svg.SVGCircleElement;
-import j2js.w3c.dom.svg.SVGDocument;
 
 public class SVGDemo implements EventListener {
 
