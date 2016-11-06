@@ -102,8 +102,8 @@
 	
 	<path id="project.class.path">
 		<pathelement location="${webapp.output}/WEB-INF/classes" />
-        <pathelement location="${j2js-api.location}/target/classes"/>
         <pathelement location="${j2js-jre.location}/target/classes"/>
+        <pathelement location="${j2js-api.location}/target/classes"/>
         <pathelement location="${j2js-compiler.location}/target/classes"/>
 		<fileset dir="${webapp.output}/WEB-INF/lib" includes="**/*.jar" />
 		<fileset dir="lib/maven/provided" includes="**/*.jar" />
@@ -117,7 +117,9 @@
     </path>
 	
 	<target name="javac" depends="init,libs,src-filter" description="Compile java source to bytecode">		
-		<javac includeantruntime="false" srcdir="src" includes="**" encoding="utf-8" destdir="${webapp.output}/WEB-INF/classes"
+		<javac includeantruntime="false" srcdir="src" includes="**" 
+			bootclasspath="${j2js-jre.location}/target/classes"
+			encoding="utf-8" destdir="${webapp.output}/WEB-INF/classes"
 			source="1.8" target="1.8" nowarn="true" debug="true" debuglevel="lines,vars,source">
 			<classpath refid="project.class.path" />
 		</javac>

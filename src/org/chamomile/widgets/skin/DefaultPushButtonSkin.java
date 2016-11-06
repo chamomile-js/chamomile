@@ -2,7 +2,6 @@ package org.chamomile.widgets.skin;
 
 import static j2js.Global.document;
 
-import org.chamomile.util.Callback;
 import org.chamomile.widgets.Component;
 import org.chamomile.widgets.ComponentSkin;
 import org.chamomile.widgets.PushButton;
@@ -39,17 +38,15 @@ public class DefaultPushButtonSkin extends ComponentSkin implements PushButtonSk
 		//
 		// Install property listeners...
 		//
-
-		propertyChangeHandlers.put(PushButton.TEXT, new Callback<String, Void>() {
-			@Override
-			public Void call(String previousValue) {
-				textChanged((PushButton) getComponent(), previousValue);
-				return null;
-			}
-		});
+		
 	}
 
-	protected void textChanged(PushButton view, String previousValue) {
-		button.setTextContent(view.getText());
-	}
+  @Override
+  protected String getClassNamePrefix() {
+    return "btn-";
+  }
+
+//	protected void textChanged(PushButton view, String previousValue) {
+//		button.setTextContent(view.getText());
+//	}
 }

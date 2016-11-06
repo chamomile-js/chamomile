@@ -159,11 +159,11 @@ public class InternalPreconditions {
 	 * Ensures that {@code size} specifies a valid array size (i.e.
 	 * non-negative).
 	 */
-	public static void checkArraySize(int size) {
-		if (size < 0) {
-			throw new NegativeArraySizeException("Negative array size: " + size);
-		}
-	}
+//	public static void checkArraySize(int size) {
+//		if (size < 0) {
+//			throw new NegativeArraySizeException("Negative array size: " + size);
+//		}
+//	}
 
 	/**
 	 * Ensures that {@code index} specifies a valid <i>element</i> in an array,

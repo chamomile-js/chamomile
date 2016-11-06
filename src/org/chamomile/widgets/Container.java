@@ -6,7 +6,7 @@ import org.chamomile.collections.Sequence;
 import org.chamomile.util.InternalPreconditions;
 import org.chamomile.util.ListenerList;
 
-public abstract class Container<T extends Component> extends Component implements HasChildren<T> {
+public abstract class Container<T extends View> extends Component implements ViewParent<T> {
 
 	public final class ChildrenSequence implements Sequence<T> {
 		private final Sequence<T> children = Sequence.create(new ArrayList<T>());
@@ -24,14 +24,14 @@ public abstract class Container<T extends Component> extends Component implement
 			InternalPreconditions.checkArgument(!contains(child), "child '%s' was added before", child);
 			InternalPreconditions.checkArgument(child.getParent() == null, "child '%s' already has a parent.", child);
 
-			if (child instanceof HasChildren && ((HasChildren<?>) child).isAncestor(Container.this)) {
+			if (child instanceof ViewParent && ((ViewParent<?>) child).toComponent().isAncestor(Container.this)) {
 				throw new IllegalArgumentException("Component already exists in ancestry.");
 			}
 
-			child.setParent(Container.this);
+			child.toComponent().setParent(Container.this);
 			children.insert(child, index);
 			if (containerListeners != null) {
-				containerListeners.componentInserted(Container.this, index);
+				containerListeners.viewInserted(Container.this, index);
 			}
 		}
 
@@ -58,7 +58,7 @@ public abstract class Container<T extends Component> extends Component implement
 			Sequence<T> removed = children.remove(index, count);
 			if (removed.getLength() > 0) {
 				if (containerListeners != null) {
-					containerListeners.componentsRemoved(Container.this, index, removed);
+					containerListeners.viewsRemoved(Container.this, index, removed);
 				}
 			}
 			return removed;
@@ -87,7 +87,7 @@ public abstract class Container<T extends Component> extends Component implement
 
 	// ---
 
-	private HasChildrenListenerList<T> containerListeners;
+	private ViewParentListenerList<T> containerListeners;
 
 	/**
 	 * The container's children property.
@@ -107,7 +107,7 @@ public abstract class Container<T extends Component> extends Component implement
 	// ---
 
 	@Override
-	public boolean isAncestor(HasChildren<?> container) {
+	protected boolean isAncestor(ViewParent<?> container) {
 		boolean ancestor = false;
 
 		Component parent = (Component) container;
@@ -123,26 +123,26 @@ public abstract class Container<T extends Component> extends Component implement
 	}
 
 	@Override
-	public void descendantAdded(Component descendant) {
-		HasChildren<?> parent = getParent();
+	protected void descendantAdded(Component descendant) {
+		ViewParent<?> parent = getParent();
 
 		if (parent != null) {
-			parent.descendantAdded(descendant);
+			parent.toComponent().descendantAdded(descendant);
 		}
 	}
 
 	@Override
 	public void descendantRemoved(Component descendant) {
-		HasChildren<?> parent = getParent();
+		ViewParent<?> parent = getParent();
 
 		if (parent != null) {
-			parent.descendantRemoved(descendant);
+			parent.toComponent().descendantRemoved(descendant);
 		}
 	}
 
-	public final ListenerList<HasChildrenListener<T>> getContainerListeners() {
+	public final ListenerList<ViewParentListener<T>> getContainerListeners() {
 		if (containerListeners == null) {
-			containerListeners = new HasChildrenListenerList<T>();
+			containerListeners = new ViewParentListenerList<T>();
 		}
 		return containerListeners;
 	}

@@ -8,7 +8,7 @@ import org.chamomile.util.ListenerList;
 import org.chamomile.widgets.skin.DefaultFieldSetSkin;
 import org.chamomile.widgets.skin.FieldSetSkin;
 
-public class FieldSet extends FormGroup implements HasChildren<FormGroup> {
+public class FieldSet extends FormGroup implements ViewParent<FormGroup> {
 
 	public final class ChildrenSequence implements Sequence<FormGroup> {
 		private final Sequence<FormGroup> children = Sequence.create(new ArrayList<FormGroup>());
@@ -26,14 +26,14 @@ public class FieldSet extends FormGroup implements HasChildren<FormGroup> {
 			InternalPreconditions.checkArgument(!contains(child), "child '%s' was added before", child);
 			InternalPreconditions.checkArgument(child.getParent() == null, "child '%s' already has a parent.", child);
 
-			if (child instanceof HasChildren && ((HasChildren<?>) child).isAncestor(FieldSet.this)) {
+			if (child instanceof ViewParent && ((ViewParent<?>) child).toComponent().isAncestor(FieldSet.this)) {
 				throw new IllegalArgumentException("Component already exists in ancestry.");
 			}
 
 			child.setParent(FieldSet.this);
 			children.insert(child, index);
 			if (fieldSetListeners != null) {
-				fieldSetListeners.componentInserted(FieldSet.this, index);
+				fieldSetListeners.viewInserted(FieldSet.this, index);
 			}
 		}
 
@@ -60,7 +60,7 @@ public class FieldSet extends FormGroup implements HasChildren<FormGroup> {
 			Sequence<FormGroup> removed = children.remove(index, count);
 			if (removed.getLength() > 0) {
 				if (fieldSetListeners != null) {
-					fieldSetListeners.componentsRemoved(FieldSet.this, index, removed);
+					fieldSetListeners.viewsRemoved(FieldSet.this, index, removed);
 				}
 			}
 			return removed;
@@ -89,7 +89,7 @@ public class FieldSet extends FormGroup implements HasChildren<FormGroup> {
 
 	// ---
 
-	private HasChildrenListenerList<FormGroup> fieldSetListeners;
+	private ViewParentListenerList<FormGroup> fieldSetListeners;
 
 	public FieldSet() {
 		this(new DefaultFieldSetSkin());
@@ -130,7 +130,7 @@ public class FieldSet extends FormGroup implements HasChildren<FormGroup> {
 	// ---
 
 	@Override
-	public boolean isAncestor(HasChildren<?> container) {
+	protected boolean isAncestor(ViewParent<?> container) {
 		boolean ancestor = false;
 
 		Component parent = (Component) container;
@@ -146,28 +146,28 @@ public class FieldSet extends FormGroup implements HasChildren<FormGroup> {
 	}
 
 	@Override
-	public void descendantAdded(Component descendant) {
-		HasChildren<?> parent = getParent();
+	protected void descendantAdded(Component descendant) {
+		ViewParent<?> parent = getParent();
 
 		if (parent != null) {
-			parent.descendantAdded(descendant);
+			parent.toComponent().descendantAdded(descendant);
 		}
 	}
 
 	@Override
-	public void descendantRemoved(Component descendant) {
-		HasChildren<?> parent = getParent();
+	protected void descendantRemoved(Component descendant) {
+		ViewParent<?> parent = getParent();
 
 		if (parent != null) {
-			parent.descendantRemoved(descendant);
+			parent.toComponent().descendantRemoved(descendant);
 		}
 	}
 
 	// ---
 
-	public final ListenerList<HasChildrenListener<FormGroup>> getFieldSetListeners() {
+	public final ListenerList<ViewParentListener<FormGroup>> getFieldSetListeners() {
 		if (fieldSetListeners == null) {
-			fieldSetListeners = new HasChildrenListenerList<FormGroup>();
+			fieldSetListeners = new ViewParentListenerList<FormGroup>();
 		}
 		return fieldSetListeners;
 	}

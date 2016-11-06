@@ -31,12 +31,12 @@ public class DefaultLabelSkin extends ComponentSkin implements LabelSkin {
 		// Install property listeners...
 		//
 
-		propertyChangeHandlers.put(Label.TEXT, new Callback<String, Void>() {
-			@Override
-			public Void call(String previousValue) {
-				return textChanged((Label) getComponent(), previousValue);
-			}
-		});
+//		propertyChangeHandlers.put(Label.TEXT, new Callback<String, Void>() {
+//			@Override
+//			public Void call(String previousValue) {
+//				return textChanged((Label) getComponent(), previousValue);
+//			}
+//		});
 
 		propertyChangeHandlers.put(Label.LABELED_CONTROL_ID, new Callback<String, Void>() {
 			@Override
@@ -53,10 +53,10 @@ public class DefaultLabelSkin extends ComponentSkin implements LabelSkin {
 		});
 	}
 
-	protected Void textChanged(Label view, String previousValue) {
-		label.setTextContent(view.getText());
-		return null;
-	}
+//	protected Void textChanged(Label view, String previousValue) {
+//		label.setTextContent(view.getText());
+//		return null;
+//	}
 
 	protected Void labeledControlIdChanged(Label view, String previousValue) {
 		label.setHtmlFor(view.getLabeledControlId());

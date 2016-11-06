@@ -1,10 +1,9 @@
 package org.chamomile.widgets;
 
 import org.chamomile.collections.Sequence;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.html.HTMLElement;
 
-public abstract class ContainerSkin<T extends Component> extends ComponentSkin implements HasChildrenListener<T> {
+public abstract class ContainerSkin<T extends View> extends ComponentSkin implements ViewParentListener<T> {
 
 	@Override
 	public void install(Component component) {
@@ -23,25 +22,25 @@ public abstract class ContainerSkin<T extends Component> extends ComponentSkin i
 	}
 
 	@Override
-	public void componentInserted(HasChildren<T> container, int index) {
+	public void viewInserted(ViewParent<T> container, int index) {
 		HTMLElement parentElem = getContainerElement();
-		Component component = container.getChildren().get(index);
+		Component component = container.getChildren().get(index).toComponent();
 		if (component != null) {
 			HTMLElement newElem = component.getSkin().getElement();
-			if (index >= parentElem.getChildElementCount()) {
+			if (++index >= container.getChildren().getLength()) {
 				parentElem.appendChild(newElem);
 			} else {
-				NodeList childNodes = parentElem.getChildNodes();
-				parentElem.insertBefore(newElem, childNodes.item(index));
+				Skin skin = getSkin(container.getChildren().get(index));
+				parentElem.insertBefore(newElem, skin.getElement());
 			}
 		}
 	}
 
 	@Override
-	public void componentsRemoved(HasChildren<T> container, int index, Sequence<T> removed) {
+	public void viewsRemoved(ViewParent<T> container, int index, Sequence<T> removed) {
 		HTMLElement parentElem = getContainerElement();
 		for (int i = 0, n = removed.getLength(); i < n; i++) {
-			Component component = removed.get(i);
+			Component component = removed.get(i).toComponent();
 			if (component != null) {
 				HTMLElement elem = component.getSkin().getElement();
 				parentElem.removeChild(elem);
@@ -50,7 +49,7 @@ public abstract class ContainerSkin<T extends Component> extends ComponentSkin i
 	}
 
 	@Override
-	public void componentMoved(HasChildren<T> container, int from, int to) {
+	public void viewMoved(ViewParent<T> container, int from, int to) {
 		throw new UnsupportedOperationException("Not implemented yet!!!");
 	}
 

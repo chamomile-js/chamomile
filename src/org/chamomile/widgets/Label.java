@@ -3,7 +3,7 @@ package org.chamomile.widgets;
 import org.chamomile.widgets.skin.DefaultLabelSkin;
 import org.chamomile.widgets.skin.LabelSkin;
 
-public class Label extends Component {
+public class Label extends Component implements HasTextProperty {
 
 	public Label() {
 		this(new DefaultLabelSkin());
@@ -14,14 +14,16 @@ public class Label extends Component {
 	}
 
 	/**
-	 * The label's text property.
+	 * Get the label's text property.
+	 * 
+	 * @return the label's text.
 	 */
-	public static final String TEXT = "text";
-
+	@Override
 	public String getText() {
 		return (String) get(TEXT, "");
 	}
 
+	@Override
 	public void setText(String text) {
 		put(TEXT, text);
 	}

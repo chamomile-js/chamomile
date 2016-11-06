@@ -8,14 +8,14 @@ import org.chamomile.widgets.Component;
 import org.chamomile.widgets.ComponentSkin;
 import org.chamomile.widgets.FieldSet;
 import org.chamomile.widgets.FormGroup;
-import org.chamomile.widgets.HasChildren;
-import org.chamomile.widgets.HasChildrenListener;
+import org.chamomile.widgets.ViewParent;
+import org.chamomile.widgets.ViewParentListener;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.html.HTMLElement;
 import org.w3c.dom.html.HTMLFieldSetElement;
 import org.w3c.dom.html.HTMLLegendElement;
 
-public class DefaultFieldSetSkin extends ComponentSkin implements FieldSetSkin, HasChildrenListener<FormGroup> {
+public class DefaultFieldSetSkin extends ComponentSkin implements FieldSetSkin, ViewParentListener<FormGroup> {
 	private final HTMLLegendElement legend;
 	private final HTMLFieldSetElement container;
 
@@ -61,7 +61,7 @@ public class DefaultFieldSetSkin extends ComponentSkin implements FieldSetSkin, 
 	// ---
 	
 	@Override
-	public void componentInserted(HasChildren<FormGroup> container, int index) {
+	public void viewInserted(ViewParent<FormGroup> container, int index) {
 		HTMLElement parentElem = getContainerElement();
 		Component component = container.getChildren().get(index);
 		if (component != null) {
@@ -76,7 +76,7 @@ public class DefaultFieldSetSkin extends ComponentSkin implements FieldSetSkin, 
 	}
 
 	@Override
-	public void componentsRemoved(HasChildren<FormGroup> container, int index, Sequence<FormGroup> removed) {
+	public void viewsRemoved(ViewParent<FormGroup> container, int index, Sequence<FormGroup> removed) {
 		HTMLElement parentElem = getContainerElement();
 		for (int i = 0, n = removed.getLength(); i < n; i++) {
 			Component component = removed.get(i);
@@ -88,7 +88,7 @@ public class DefaultFieldSetSkin extends ComponentSkin implements FieldSetSkin, 
 	}
 
 	@Override
-	public void componentMoved(HasChildren<FormGroup> container, int from, int to) {
+	public void viewMoved(ViewParent<FormGroup> container, int from, int to) {
 		throw new UnsupportedOperationException("Not implemented yet!!!");
 	}
 
